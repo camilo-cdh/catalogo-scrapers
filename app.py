@@ -44,15 +44,23 @@ st.sidebar.download_button(
     mime="application/json"
 )
 
+if "limit" not in st.session_state:
+    st.session_state.limit = 20  # cantidad inicial
+
+productos_visibles = productos_filtrados[:st.session_state.limit]
+
+
 with st.container():
     # Grid 5 por fila
     num_cols = 5
-    for i in range(0, len(productos_filtrados), num_cols):
-        fila = productos_filtrados[i:i + num_cols]
+    
+    for i in range(0, len(productos_visibles), num_cols):
+        fila = productos_visibles[i:i + num_cols]
         cols = st.columns(len(fila))
 
         for idx, p in enumerate(fila):
             with cols[idx]:
+
                 # Imagen
                 imagen_url = p.get("imagen_url", "")
                 if imagen_url:
@@ -80,6 +88,7 @@ with st.container():
                 if descripcion:
                     st.write(f"**Descripción:** {descripcion}")
 
+                # Fuentes y urls
                 fuente = p.get('fuente', '')
                 fuente_url = p.get("fuente_url", "")
 
@@ -89,3 +98,13 @@ with st.container():
                 producto_url = p.get("producto_url", "")
                 if producto_url:
                     st.markdown(f"[Ver producto]({producto_url})")
+
+    # Botón centrado
+    col1, col2, col3 = st.columns([1, 1, 1])
+
+    with col2:
+        if st.session_state.limit < len(productos_filtrados):
+            if st.button("⬇️ Cargar más productos"):
+                st.session_state.limit += 20
+                st.rerun()
+
