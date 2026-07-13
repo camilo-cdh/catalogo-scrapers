@@ -77,6 +77,15 @@ streamlit run app.py
 
 ---
 
+## 🕷️ Origen de los datos: Scraper Playwright
+
+Este catálogo no está construido manualmente: los productos provienen de un scraper desarrollado con Playwright, el cual extrae información desde distintas tiendas y genera el archivo **'productos.json'** utilizado por esta aplicación:
+
+[**Scraper Playwright**](https://github.com/camilo-cdh/scraper-productos/)
+
+
+---
+
 ## 📦 Base de datos
 
 El archivo `productos.json` contiene la información del catálogo, con los siguientes campos:
